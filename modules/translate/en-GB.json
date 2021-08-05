@@ -1,0 +1,150 @@
+{
+	"commands": {
+		"say": {
+			"description": "Send your message.",
+			"name": "Say Command",
+			"arguments": [
+				{
+					"name": "message",
+					"description": "Message that the bot should send."
+				},
+				{
+					"name": "delete the trigger",
+					"description": "Would you like to delete your trigger message ? (true or false)"
+				}
+			]
+		},
+		"help": {
+			"description": "Show help menu",
+			"name": "Help Command",
+			"arguments": [
+				{
+					"name": "command or category",
+					"description": "Command or category for which you want more information"
+				}
+			]
+		},
+		"ping": {
+			"description": "Pong !",
+			"name": "Ping Command"
+		},
+		"settings": {
+			"description": "Allows you to modify the settings of the bots on this server",
+			"name": "Command Settings",
+			"arguments": [
+				{
+					"name": "parameter",
+					"description": "The name of the parameter"
+				},
+				{
+					"name": "value",
+					"description": "The new value of the parameter"
+				}
+			]
+		},
+		"clear": {
+			"description": "Deletes messages in the living room.",
+			"name": "Command Clear",
+			"arguments": [
+				{
+					"name": "quantity",
+					"description": "The number of messages you want to delete."
+				}
+			]
+		},
+		"command" : {
+			"description": "Enables or disables commands on the server.",
+			"name": "Command Command",
+			"arguments": [
+				{
+					"name": "command",
+					"description": "The command to be disabled or enabled."
+				}
+			]
+		},
+		"info": {
+			"description": "Displays information about the server, a user, a show,...",
+			"name": "Command Info",
+			"arguments": [
+				{
+					"name": "target",
+					"description": "Corresponds to the item whose information you want to get."
+				}
+			]
+		}
+	},
+	"categories": {
+		"fun": {
+			"name": "Fun",
+			"description": "Fun commands ! ✨"
+		},
+		"general": {
+			"name": "General",
+			"description": "General commands"
+		},
+		"moderation": {
+			"name": "Moderation",
+			"description": "Bot and server moderation commands."
+		},
+		"dev": {
+			"name": "Developer",
+			"description": "Developer Commands"
+		}
+	},
+	"guildSettings": {
+		"language": {
+			"name": "Language",
+			"description": "The language of the bot interface.",
+			"possibleValues": {
+				"en-GB": "English",
+				"fr-FR": "Français"
+			}
+		},
+		"prefix": {
+			"name": "Prefix",
+			"description": "The prefix of the bot commands.\nShortcut: prefix [prefix]."
+		}
+	},
+	"error": {
+		"invalidArgument": "The argument #{{argumentIndex}} is invalid!",
+		"invalidPermissions": "You do not have sufficient permissions to run this command.",
+		"argumentRequired": "The argument #{{argumentIndex}} is required!",
+		"commandFailed": "The command failed, please try again by changing the arguments.",
+		"invalidBotPermissions": "Bot permissions are insufficient!"
+	},
+	"help": {
+		"title": "User help for this bot",
+		"homeDescription": "Welcome to the help menu of this bot, you can select a category with the drop down menu to see the different commands.",
+		"homeMenuPlaceholder": "Choose a category ...",
+		"categoryMenuPlaceholder": "Choose a command ...",
+		"required": "required",
+		"back": "Back"
+	},
+	"main": {
+		"prefix": "The current prefix is `{{prefix}}`.",
+		"disabledCommand": "The command is disabled on this server."
+	},
+	"settings": {
+		"title": "Configuration interface of this bot",
+		"description": "Welcome to the help configuration menu of this bot. You can select a setting with the drop-down menu to see additional information.This message allows you to modify some settings with predefined choices through drop-down menus or buttons.",
+		"homePlaceholder": "Choose a parameter...",
+		"currentValue": "Current value",
+		"back": "Back",
+		"commandPlaceholder": "Choose a value for the parameter...",
+		"invalidValue": "The value entered is invalid.",
+		"invalidSetting": "The requested setting does not exist."
+	},
+	"clear": {
+		"success": "{{quantity}} messages have been deleted!",
+		"notAll": "{{quantity}} messages have been deleted! A Discord limitation prevents deletion beyond 14 days."
+	},
+	"command": {
+		"title": "Interface for managing bot commands on the server.",
+		"description": "With this interface you can enable or disable commands on the server. To do this type the command `{{prefix}}command {your command}`.",
+		"success": "The {{command}} command has been {{state}}!",
+		"enabled": "activated",
+		"disabled": "disabled",
+		"commandsEnabled": "Commands enabled",
+		"commandsDisabled": "Commands disabled"
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"categories": {
+		"fun": {
+			"emoji": "🎉",
+			"emojiURL": "https://i.imgur.com/0ftUaTE.png"
+		},
+		"general": {
+			"emoji": "❓",
+			"emojiURL": "https://i.imgur.com/fRDwlAq.png"
+		},
+		"moderation": {
+			"emoji": "🔨",
+			"emojiURL": "https://i.imgur.com/zJqxQxi.png"
+		},
+		"dev": {
+			"emoji": "💻",
+			"emojiURL": "https://i.imgur.com/JknikCu.png"
+		}
+	}
+}

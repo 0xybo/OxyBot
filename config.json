@@ -1,0 +1,14 @@
+{
+    "debugLog": false,
+    "guildSettings": {
+        "language": {
+            "writable": true,
+            "type": "string",
+            "possibleValues": ["en-GB", "fr-FR"]
+        },
+        "prefix": {
+            "writable": true,
+            "type": "string"
+        }
+    }
+}

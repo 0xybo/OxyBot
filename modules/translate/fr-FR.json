@@ -1,0 +1,150 @@
+{
+	"commands": {
+		"say": {
+			"description": "Fait dire un message au bot.",
+			"name": "Commande Say",
+			"arguments": [
+				{
+					"name": "message",
+					"description": "Le message que le bot doit envoyer."
+				},
+				{
+					"name": "supprimer le déclencheur",
+					"description": "Souhaitez vous supprimer votre message déclencheur ? (oui: true, non: false)"
+				}
+			]
+		},
+		"help": {
+			"description": "Affiche le menu d'aide",
+			"name": "Commande Help",
+			"arguments": [
+				{
+					"name": "commande ou catégorie",
+					"description": "Commande ou catégorie dont vous voulez avoir plus d'information"
+				}
+			]
+		},
+		"ping": {
+			"description": "Pong !",
+			"name": "Commande Ping"
+		},
+		"settings": {
+			"description": "Permet de modifier les paramètres des bots de ce serveur",
+			"name": "Commande Settings",
+			"arguments": [
+				{
+					"name": "paramètre",
+					"description": "Le nom du paramètre"
+				},
+				{
+					"name": "valeur",
+					"description": "La nouvelle valeur du paramètre"
+				}
+			]
+		},
+		"clear": {
+			"description": "Supprime des messages dans le salon.",
+			"name": "Commande Clear",
+			"arguments": [
+				{
+					"name": "quantité",
+					"description": "Le nombre de messages que vous voulez supprimer."
+				}
+			]
+		},
+		"command" : {
+			"description": "Active ou désactive des commandes sur le serveur.",
+			"name": "Commande Command",
+			"arguments": [
+				{
+					"name": "commande",
+					"description": "La commande à désactiver ou activer."
+				}
+			]
+		},
+		"infos": {
+			"description": "Affiche des informations sur le serveur, un utilisateur, un salon,...",
+			"name": "Commande Infos",
+			"arguments": [
+				{
+					"name": "cible",
+					"description": "Correspond à l'élément dont vous voulez avoir les informations."
+				}
+			]
+		}
+	},
+	"categories": {
+		"fun": {
+			"name": "Amusant",
+			"description": "Commandes amusantes ! ✨"
+		},
+		"general": {
+			"name": "Général",
+			"description": "Commandes générales."
+		},
+		"moderation": {
+			"name": "Modération",
+			"description": "Commandes de modération du bot et du serveur."
+		},
+		"dev": {
+			"name": "Développeur",
+			"description": "Commandes du développeur"
+		}
+	},
+	"guildSettings": {
+		"language": {
+			"name": "Langue",
+			"description": "La langue de l'interface du bot.",
+			"possibleValues": {
+				"en-GB": "English",
+				"fr-FR": "Français"
+			}
+		},
+		"prefix": {
+			"name": "Préfixe",
+			"description": "Le préfixe des commandes du bot.\nRaccourci: prefix [préfixe]."
+		}
+	},
+	"error": {
+		"invalidArgument": "L'argument n°{{argumentIndex}} est invalide !",
+		"invalidPermissions": "Vous n'avez pas les autorisations suffisantes pour exécuter cette commande.",
+		"argumentRequired": "L'argument n°{{argumentIndex}} est requis !",
+		"commandFailed": "La commande a échoué, veuillez réessayer en modifiant les arguments.",
+		"invalidBotPermissions": "Les autorisations du bot sont insuffisantes !"
+	},
+	"help": {
+		"title": "Aide d'utilisation pour ce bot",
+		"homeDescription": "Bienvenue dans le menu d'aide de ce bot, vous pouvez sélectionner une catégorie avec le menu déroulant pour voir les différentes commandes.",
+		"homeMenuPlaceholder": "Choisir une catégorie ...",
+		"categoryMenuPlaceholder": "Choisir une commande ...",
+		"required": "requis",
+		"back": "Retour"
+	},
+	"main": {
+		"prefix": "Le prefix actuel est `{{prefix}}`.",
+		"disabledCommand": "La commande est désactivée sur ce serveur."
+	},
+	"settings": {
+		"title": "Interface de configuration de ce bot",
+		"description": "Bienvenue dans le menu de configuration d'aide de ce bot. Vous pouvez sélectionner un paramètre avec le menu déroulant pour voir des informations supplémentaires.Ce message vous permet de modifier certains paramètres avec des choix prédéfinis par le biais de menus déroulants ou de boutons.",
+		"homePlaceholder": "Choisir un paramètre...",
+		"currentValue": "Valeur actuelle",
+		"back": "Retour",
+		"commandPlaceholder": "Choisir une valeur pour le paramètre...",
+		"invalidValue": "La valeur renseignée est invalide.",
+		"invalidSetting": "La paramètre demandé n'existe pas."
+	},
+	"clear": {
+		"success": "{{quantity}} messages ont été supprimés !",
+		"notAll" : "{{quantity}} messages ont été supprimés ! Une limitation de Discord empêche la suppression au-delà de 14 jours."
+	},
+	"command": {
+		"title": "Interface de gestion des commandes du bot sur le serveur.",
+		"description": "Grâce à cette interface vous pouvez activer ou désactiver des commandes sur le serveur.\nPour cela taper la commande `{{prefix}}command {votre commande}`.",
+		"success": "La commande {{command}} a été {{state}} !",
+		"enabled": "activé",
+		"disabled": "désactivé",
+		"commandsEnabled": "Commandes activés",
+		"commandsDisabled": "Commandes désactivés"
+	}
+}
