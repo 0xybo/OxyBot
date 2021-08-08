@@ -24,14 +24,14 @@ class Command extends _Command {
 			if (message.client.commands.get(message.parsed.arguments[0].raw.toLowerCase())) {
 				let id = message.parsed.arguments[0].raw.toLowerCase();
 				let state;
-				let disabled = JSON.parse(config.disabledCommands);
+				let disabled = JSON.parse(config.disabled_commands);
 				if (disabled.includes(id)) {
 					state = message.translate.get("command.enabled");
-					await message.client.db.setGuildSetting(message.guild.id, "disabledCommands", JSON.stringify(disabled.slice(disabled.indexOf(id), 1)));
+					await message.client.db.setGuildSetting(message.guild.id, "disabled_commands", JSON.stringify(disabled.slice(disabled.indexOf(id), 1)));
 				} else {
 					state = message.translate.get("command.disabled");
 					disabled.push(id);
-					await message.client.db.setGuildSetting(message.guild.id, "disabledCommands", JSON.stringify(disabled));
+					await message.client.db.setGuildSetting(message.guild.id, "disabled_commands", JSON.stringify(disabled));
 				}
 				config = await message.client.db.getGuild(message.guild.id);
 				message.parsed.parameters.info = message.translate.get("command.success", { command: id, state });
@@ -47,7 +47,7 @@ function home(message, config) {
 	let msg = {
 		embed: new MessageEmbed().setTitle(message.translate.get("command.title")).setDescription(message.translate.get("command.description", { prefix: config.prefix })),
 	};
-	let disabled = JSON.parse(config.disabledCommands).join(", ");
+	let disabled = JSON.parse(config.disabled_commands).join(", ");
 	let enabled = [];
 	message.client.commands.commands.forEach((cmd) => {
 		if (!disabled.includes(cmd.id)) enabled.push(cmd.id);

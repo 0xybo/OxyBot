@@ -52,7 +52,7 @@
 				}
 			]
 		},
-		"command" : {
+		"command": {
 			"description": "Enables or disables commands on the server.",
 			"name": "Command Command",
 			"arguments": [
@@ -103,6 +103,14 @@
 		"prefix": {
 			"name": "Prefix",
 			"description": "The prefix of the bot commands.\nShortcut: prefix [prefix]."
+		},
+		"allow_invite_creation": {
+			"name": "Invitation creation",
+			"description": "Allow invitation creation by bot",
+			"possibleValues": {
+				"true": "Yes",
+				"false": "No"
+			}
 		}
 	},
 	"error": {

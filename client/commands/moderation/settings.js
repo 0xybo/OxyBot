@@ -14,7 +14,7 @@ class Settings extends Command {
 				required: false,
 			},
 			{
-				type: "string",
+				type: ["string", "boolean"],
 				required: false,
 			},
 		]);
@@ -24,15 +24,16 @@ class Settings extends Command {
 			{
 				trigger: "prefix",
 				message: {
-					arguments: [{raw: "prefix", original: "prefix", type: "string"}],
-					params: {noButtons: true}
-				}
-			}
-		])
+					arguments: [{ raw: "prefix", original: "prefix", type: "string" }],
+					params: { noButtons: true },
+				},
+			},
+		]);
 	}
 	async run(message, config) {
 		if (message.parsed.params.interaction && message.author.id != message.client.user.id) message.parsed.params.interaction = false;
 		if (message.parsed.arguments.length === 1) {
+			message.parsed.arguments[0].raw = message.parsed.arguments[0].raw.replace(/\s/gmi, "_")
 			let setting = settings[message.parsed.arguments[0]?.raw.toLowerCase()];
 			if (!setting) return message.client.commands.runCommand(message, "settings", config, { params: { error: message.translate.get("settings.invalidSetting") } });
 			let name = message.parsed.arguments[0].raw.toLowerCase();
@@ -81,11 +82,12 @@ class Settings extends Command {
 			if (message.parsed.params.interaction) return message.edit(msg);
 			else return message.channel.send(msg);
 		} else if (message.parsed.arguments.length === 2) {
+			message.parsed.arguments[0].raw = message.parsed.arguments[0].raw.replace(/\s/gmi, "_")
 			let setting = settings[message.parsed.arguments[0]?.raw.toLowerCase()];
 			if (!setting) return message.client.commands.runCommand(message, "settings", config, { params: { error: message.translate.get("settings.invalidSetting") } });
 			let name = message.parsed.arguments[0].raw.toLowerCase();
 			if (setting.possibleValues) {
-				if (settings.possibleValues.includes(message.parsed.arguments[1].raw)) {
+				if (setting.possibleValues.includes(message.parsed.arguments[1].raw)) {
 					await message.client.db.setGuildSetting(message.guild.id, name, message.parsed.arguments[1].raw);
 					config[name] = message.parsed.arguments[1].raw;
 					return message.client.commands.runCommand(message, "settings", config, {

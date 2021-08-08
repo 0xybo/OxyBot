@@ -80,7 +80,7 @@ function parseSync(message, prefix, options = {}) {
 			} else if (/<t:[0-9]+(?:|:(?:f|F|d|D|t|T|R))>/gm.test(args[arg].raw)) {
 				args[arg].type = "time";
 				args[arg].timeType = args[arg].raw.match(/(?<=<t:[0-9]+(|:))(f|F|d|D|t|T|R)(?=>)/gm)?.[0] || "f";
-				args[arg].date = new Date(Number(args[arg].raw.match(/(?<=<t:)[0-9]+(?=(|(:(f|F|d|D|t|T|R)))>)/gm)?.[0]));
+				args[arg].date = new Date(args[arg].raw.match(/(?<=<t:)[0-9]+(?=(|(:(f|F|d|D|t|T|R)))>)/gm)?.[0]);
 			} else {
 				let emoji = emojis.find((e) => e.key === args[arg].raw);
 				if (emoji) {
@@ -107,10 +107,10 @@ async function fetchDataFromArgs(message, parsed) {
 	for (let i in args) {
 		switch (args[i].type) {
 			case "user":
-				args[i].user = (await message.client.users.fetch(args[i].id, false, true)) || undefined;
+				args[i].user = (await message.client.users.fetch(args[i].id, true, true)) || undefined;
 				break;
 			case "channel":
-				args[i].channel = (await message.client.channels.fetch(args[i].id, false, true)) || undefined;
+				args[i].channel = (await message.client.channels.fetch(args[i].id, true, true)) || undefined;
 				break;
 			case "custom_emoji":
 				args[i].emoji = message.client.emojis.cache.find((e) => e.id === args[i].id);
@@ -133,11 +133,12 @@ async function _message(Bot, msg, config) {
 		let cmd = message.client.commands.get(message.parsed.command);
 		if (cmd) return message.client.commands.run(cmd, message, config);
 		else {
-			let { command: cmd, shortcut: sc } = message.client.commands.getShortcut(message.parsed.command);
+			let _sc = message.client.commands.getShortcut(message.parsed.command);
+			if (!_sc) return false;
+			let { command: cmd, shortcut: sc } = _sc;
 			Object.assign(message.parsed.params, sc.message.params || {});
 			message.parsed.arguments = sc.message.arguments.concat(message.parsed.arguments || []);
 			message.parsed.command = cmd.id;
-			console.log(message.parsed.arguments)
 			return message.client.commands.run(cmd, message, config);
 		}
 	}

@@ -1,7 +1,6 @@
 const recursive_readdir = require("recursive-readdir");
 const path = require("path");
 const config = require("./commands/__config.json");
-const { Message } = require("discord.js");
 
 class Commands {
 	constructor(_this) {
@@ -44,13 +43,10 @@ class Commands {
 		});
 		return new Commands({ commands: _commands, categories: _categories, logger });
 	}
-	/**
-	 * @param {Message} message
-	 * */
 	async run(cmd, message, config) {
 		message.translate = new message.client.Translate({ messages: message.client.translate.getAllWithLanguage(config.language) });
 		let args = cmd.arguments;
-		if (config.disabledCommands.includes(cmd.id)) return message.channel.send(message.translate.get("main.disabledCommand"));
+		if (config.disabled_commands.includes(cmd.id)) return message.channel.send(message.translate.get("main.disabledCommand"));
 		for (let i in args) {
 			if (args[i].required && !message.parsed.arguments[i])
 				return this.runCommand(message, "help", config, {
@@ -63,7 +59,7 @@ class Commands {
 						arguments: [{ raw: message.parsed.command.toLowerCase(), original: message.parsed.command.toLowerCase(), type: "string" }],
 						params: { noButtons: true, error: message.translate.get("error.invalidArgument", { argumentIndex: Number(i) + 1 }) },
 					});
-				if (!args[i].possibleValues?.includes(message.parsed.arguments[i].raw))
+				if (args[i].possibleValues? !args[i].possibleValues.includes(message.parsed.arguments[i].raw) : false)
 					return this.runCommand(message, "help", config, {
 						arguments: [{ raw: message.parsed.command.toLowerCase(), original: message.parsed.command.toLowerCase(), type: "string" }],
 						params: { noButtons: true, error: message.translate.get("error.invalidArgument", { argumentIndex: Number(i) + 1 }) },

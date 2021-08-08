@@ -1,14 +1,28 @@
 {
-    "debugLog": false,
-    "guildSettings": {
-        "language": {
-            "writable": true,
-            "type": "string",
-            "possibleValues": ["en-GB", "fr-FR"]
-        },
-        "prefix": {
-            "writable": true,
-            "type": "string"
-        }
-    }
+	"debugLog": false,
+	"guildSettings": {
+		"language": {
+			"writable": true,
+			"type": "string",
+			"possibleValues": ["en-GB", "fr-FR"]
+		},
+		"prefix": {
+			"writable": true,
+			"type": "string"
+		},
+		"allow_invite_creation": {
+			"writable": true,
+			"type": "boolean",
+			"possibleValues": ["true", "false"]
+		}
+	},
+	"informations": {
+		"owner": {
+			"name": "Albatros",
+			"discord": {
+				"id": "381412820409122816",
+				"tag": "Albatros#0216"
+			}
+		}
+	}
 }

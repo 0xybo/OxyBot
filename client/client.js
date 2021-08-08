@@ -49,3 +49,4 @@ class Client extends Discord.Client {
 }
 
 module.exports = Client;
+

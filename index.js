@@ -9,6 +9,7 @@ class Bot {
 	constructor() {
 		(async () => {
 			this.config = config
+			Object.assign(this.config, {package: require("./package.json")})
 			this.logger = new Logger("main", config.debugLog);
 			this.Logger = Logger
 			this.translate = await Translate.init();
