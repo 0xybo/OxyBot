@@ -47,7 +47,7 @@ function parseSync(message, prefix, options = {}) {
 	if (args) {
 		for (let arg in args) {
 			args[arg] = {
-				raw: args[arg].replace(/^(?:["']|`(?!``))|(?:["']|(?<!``)`)$/gim, ""),
+				raw: /^(("|'|`(?!``)).+("|'|(?<!``)`))$/gim.test(args[arg]) ? args[arg].slice(1, args[arg].length - 1) : args[arg],
 				orginal: args[arg],
 				type: "string",
 			};

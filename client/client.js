@@ -1,46 +1,42 @@
 const Discord = require("discord.js");
-const Commands = require("./commands").Commands;
 const message = require("./events/message");
-const DInteractions = require('discord-easy-interactions')
+const { Message, registerClient, Button, Menu, MessageEmbed } = require("./message");
 
 class Client extends Discord.Client {
-	constructor(_this, Bot) {
-		super();
-		Object.assign(this, _this, Bot);
+	constructor(Bot) {
+		super({
+			intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS, Discord.Intents.FLAGS.GUILD_MESSAGES],
+		});
+		Object.assign(this, Bot);
 		this.logger = new this.Logger("client", this.config.debugLog);
-		this.Message = message
-		DInteractions.registerClient(this)
-		this.DInteractions = DInteractions
-		this.on("debug", (msg) => this.logger.debug(msg));
+		registerClient(this);
+		let discordLogger = new this.Logger("Discord", this.config.debugLog);
+		this.on("debug", (msg) => discordLogger.debug(msg));
 		this.owner = {
 			id: "381412820409122816",
 		};
 		this.once("ready", () => {
 			this.logger.ok("Bot ready !");
-			this.user
-				.setPresence({
-					activity: {
-						name: "be programmed !",
-					},
-					status: "idle",
-				})
-				.then((r) => {
-					this.logger.info(`Presence: desc: "${r.activities}", statut: "${r.status}"`);
-				});
+			this.user.setPresence({
+				activities: [{
+					name: "be programmed !",
+				}],
+				status: "idle",
+			});
+			this.logger.info(`Presence: desc: "be programmed", statut: "idle"`);
 		});
-		this.on("message", async (msg) => {
+		this.on("messageCreate", async (msg) => {
 			if (!msg.guild) return;
 			if (msg.author.bot) return;
 			let config = await this.db.getGuild(msg.guild.id);
-			message(this, msg, config).catch(e => this.logger.error(e))
+			message(this, msg, config).catch((e) => this.logger.error(e));
 		});
 	}
 	static async init(Bot) {
-		let commands = await Commands.register(Bot);
 		return new Client({ commands }, Bot);
 	}
 	async start() {
-		return await this.login(process.env.token)
+		return await this.login(process.env.token);
 	}
 	async stop() {
 		this.destroy();
@@ -49,4 +45,3 @@ class Client extends Discord.Client {
 }
 
 module.exports = Client;
-

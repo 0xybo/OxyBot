@@ -1,4 +1,4 @@
-const { MessageEmbed } = require("discord.js");
+const { Message, Button, Menu, MessageEmbed } = require("../../message");
 const { Command: _Command } = require("../../commands");
 
 class Command extends _Command {
@@ -6,7 +6,7 @@ class Command extends _Command {
 		super();
 		this.setName("Command command");
 		this.setDescription("Enable/disable command on a server.");
-		this.setAliases(["command"]);
+		this.setAliases(["command", "commands", "cmd"]);
 		this.setArguments([
 			{
 				type: ["string"],
@@ -19,15 +19,17 @@ class Command extends _Command {
 	} /** @param {require('../../client')} message[client]*/
 	async run(message, config) {
 		if (message.parsed.arguments.length === 0) {
-			return home(message, config);
+			return message.channel.send(home(message, config));
 		} else {
 			if (message.client.commands.get(message.parsed.arguments[0].raw.toLowerCase())) {
 				let id = message.parsed.arguments[0].raw.toLowerCase();
+				if (id === "command") return message.translate.get("command.isCommand");
 				let state;
 				let disabled = JSON.parse(config.disabled_commands);
 				if (disabled.includes(id)) {
 					state = message.translate.get("command.enabled");
-					await message.client.db.setGuildSetting(message.guild.id, "disabled_commands", JSON.stringify(disabled.slice(disabled.indexOf(id), 1)));
+					disabled.splice(disabled.indexOf(id), 1);
+					await message.client.db.setGuildSetting(message.guild.id, "disabled_commands", JSON.stringify(disabled));
 				} else {
 					state = message.translate.get("command.disabled");
 					disabled.push(id);
@@ -35,7 +37,7 @@ class Command extends _Command {
 				}
 				config = await message.client.db.getGuild(message.guild.id);
 				message.parsed.parameters.info = message.translate.get("command.success", { command: id, state });
-				return home(message, config);
+				return message.channel.send(home(message, config));
 			}
 		}
 	}
@@ -44,16 +46,16 @@ class Command extends _Command {
 module.exports = Command;
 
 function home(message, config) {
-	let msg = {
-		embed: new MessageEmbed().setTitle(message.translate.get("command.title")).setDescription(message.translate.get("command.description", { prefix: config.prefix })),
-	};
+	let msg = new Message();
+	let embed = new MessageEmbed().setTitle(message.translate.get("command.title")).setDescription(message.translate.get("command.description", { prefix: config.prefix }));
 	let disabled = JSON.parse(config.disabled_commands).join(", ");
 	let enabled = [];
 	message.client.commands.commands.forEach((cmd) => {
 		if (!disabled.includes(cmd.id)) enabled.push(cmd.id);
 	});
-	msg.embed.addField(message.translate.get("command.commandsEnabled"), enabled.join(", ") || "/");
-	msg.embed.addField(message.translate.get("command.commandsDisabled"), disabled || "/");
-	if (message.parsed.parameters.info) msg.content = message.parsed.parameters.info;
-	return message.channel.send(msg);
+	embed.addField(message.translate.get("command.commandsEnabled"), enabled.join(", ") || "/");
+	embed.addField(message.translate.get("command.commandsDisabled"), disabled || "/");
+	if (message.parsed.parameters.info) msg.setContent(message.parsed.parameters.info);
+	msg.addEmbed(embed)
+	return msg;
 }

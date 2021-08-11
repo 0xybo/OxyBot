@@ -1,6 +1,7 @@
 const recursive_readdir = require("recursive-readdir");
 const path = require("path");
 const config = require("./commands/__config.json");
+const setting = require("../config.json");
 
 class Commands {
 	constructor(_this) {
@@ -11,7 +12,7 @@ class Commands {
 		let _commands = await recursive_readdir("client/commands").then((files) => {
 			let cmds = [];
 			files.forEach((file) => {
-				if (!file.includes("__")) {
+				if (!file.includes("__") && (setting.allow_invite_creation ? true : !file.includes("dev"))) {
 					let id = file.match(/(?<=commands(\\|\/)[a-z]*(\\|\/))[a-z\.]*(?=\.js)/gim)[0];
 					let category = file.match(/(?<=commands(\\|\/))[a-z]*(?=(\\|\/)[a-z\.]*\.js)/gim)[0];
 					try {
@@ -46,6 +47,7 @@ class Commands {
 	async run(cmd, message, config) {
 		message.translate = new message.client.Translate({ messages: message.client.translate.getAllWithLanguage(config.language) });
 		let args = cmd.arguments;
+		if (cmd.category === "dev" && message.author.id != setting.informations.owner.discord.id) return false;
 		if (config.disabled_commands.includes(cmd.id)) return message.channel.send(message.translate.get("main.disabledCommand"));
 		for (let i in args) {
 			if (args[i].required && !message.parsed.arguments[i])
@@ -59,14 +61,14 @@ class Commands {
 						arguments: [{ raw: message.parsed.command.toLowerCase(), original: message.parsed.command.toLowerCase(), type: "string" }],
 						params: { noButtons: true, error: message.translate.get("error.invalidArgument", { argumentIndex: Number(i) + 1 }) },
 					});
-				if (args[i].possibleValues? !args[i].possibleValues.includes(message.parsed.arguments[i].raw) : false)
+				if (args[i].possibleValues ? !args[i].possibleValues.includes(message.parsed.arguments[i].raw) : false)
 					return this.runCommand(message, "help", config, {
 						arguments: [{ raw: message.parsed.command.toLowerCase(), original: message.parsed.command.toLowerCase(), type: "string" }],
 						params: { noButtons: true, error: message.translate.get("error.invalidArgument", { argumentIndex: Number(i) + 1 }) },
 					});
 			} else if (args[i].default) message.parsed.arguments[i] = args[i].default;
 		}
-		if (!cmd.permissions.includes("dev") ? !message.member.hasPermission(cmd.permissions) : true)
+		if (!cmd.permissions.includes("dev") ? !message.member.permissions.has(cmd.permissions) : true)
 			return this.runCommand(message, "help", config, {
 				arguments: [{ raw: message.parsed.command.toLowerCase(), original: message.parsed.command.toLowerCase(), type: "string" }],
 				params: { noButtons: true, error: message.translate.get("error.invalidPermissions") },
@@ -79,7 +81,16 @@ class Commands {
 			});
 		return cmd
 			.run(message, config)
-			.then(() => this.logger.info(`Command success : ${cmd.id}`))
+			.then(() => {
+				this.logger.info(`Command success : ${cmd.id}`);
+				this.logger.debug(
+					`Command: ${cmd.id}\n |  arguments: ${message.parsed.arguments.map((arg) => arg.raw).join(", ")}\n |  parameters: ${Object.entries(message.parsed.parameters)
+						.map(([k, v]) => k + ":" + v)
+						.join(", ")}\n |  author: ${message.author.tag} (${message.author.id})\n |  channel: ${message.channel.name} (${message.channel.id})\n |  guild: ${message.guild.name} (${
+						message.guild.id
+					})`
+				);
+			})
 			.catch((e) => {
 				this.logger.error(`Command failed : ${cmd.id}`);
 				this.logger.error(e);

@@ -1,5 +1,5 @@
-const { MessageEmbed } = require("discord.js");
 const Command = require("../../commands").Command;
+const { Message,Button, Menu, MessageEmbed } = require("../../message");
 
 class Help extends Command {
 	constructor() {
@@ -55,76 +55,82 @@ class Help extends Command {
 }
 
 function generateMessage(type, message, config, options) {
-	let result = {};
-	let buttons = [];
-	let menus = [];
-	let content = message.parsed.params.error ? `\`\`\`diff\n- ${message.parsed.params.error}\n\`\`\`` : "";
-	let menuOptions = {};
-	let buttonOptions = {};
+	let msg = new Message();
+	if(message.parsed.parameters.error) msg.setContent(`\`\`\`diff\n- ${message.parsed.parameters.error}\n\`\`\``)
 	let embed = new MessageEmbed().setColor(Math.floor(Math.random() * 16777215));
 	if (options.embed.title) embed.setTitle(options.embed.title);
 	if (options.embed.thumbnail) embed.setThumbnail(options.embed.thumbnail);
 	if (options.embed.footer) embed.setFooter(options.embed.footer);
 	if (options.embed.description) embed.setDescription(options.embed.description);
+	let menu
 
 	switch (type) {
 		default:
 		case "home":
 			embed.setDescription(message.translate.get("help.homeDescription"));
-			menuOptions = {
-				onUpdate(component, dropDown) {
-					component.reply.defer();
-					message.client.commands.runCommand(component.message, "help", config, {
-						arguments: [{ raw: component.values[0], original: component.values[0], type: "string" }],
-						params: { interaction: true },
-					});
-				},
-				options: [],
-				placeholder: message.translate.get("help.homeMenuPlaceholder"),
-			};
-			Object.entries(message.client.commands.categories).forEach(([name, value]) => {
-				embed.addField(`${value.emoji} ${message.translate.get(["categories", name, "name"])}`, message.translate.get(["categories", name, "description"]));
-				menuOptions.options.push({
-					label: message.translate.get(["categories", name, "name"]),
-					emoji: value.emoji,
-					value: name,
-				});
+			menu = new Menu().setPlaceholder(message.translate.get("help.homeMenuPlaceholder")).onUpdate((interaction) => {
+				let cat = message.client.commands.getCategory(interaction.values[0]);
+				interaction.update(
+					generateMessage("category", message, config, {
+						embed: {
+							title: interaction.values[0],
+							thumbnail: cat.emojiURL,
+							footer: "OxyBot | help | " + interaction.values[0],
+						},
+						category: cat,
+					})
+				);
 			});
-			if (!message.parsed.params.noButtons) menus.push(new message.client.DInteractions.MessageDropDown(menuOptions));
+			Object.entries(message.client.commands.categories).forEach(([name, value]) => {
+				if (name != "dev") {
+					embed.addField(`${value.emoji} ${message.translate.get(["categories", name, "name"])}`, message.translate.get(["categories", name, "description"]));
+					menu.addOptions({
+						label: message.translate.get(["categories", name, "name"]),
+						emoji: value.emoji,
+						value: name,
+					});
+				}
+			});
+			if (!message.parsed.parameters.noButtons) msg.addMenu(menu);
 			break;
 		case "category":
-			menuOptions = {
-				onUpdate(component, dropDown) {
-					component.reply.defer();
-					message.client.commands.runCommand(component.message, "help", config, {
-						arguments: [{ raw: component.values[0], original: component.values[0], type: "string" }],
-						params: { interaction: true },
-					});
-				},
-				options: [],
-				placeholder: message.translate.get("help.categoryMenuPlaceholder"),
-			};
+			menu = new Menu().setPlaceholder(message.translate.get("help.categoryMenuPlaceholder")).onUpdate((interaction) => {
+				let cmd = message.client.commands.get(interaction.values[0]);
+				interaction.update(
+					generateMessage("command", message, config, {
+						embed: {
+							title: generateSyntax(message, cmd, config.prefix),
+							description: message.translate.get(["commands", cmd.id, "description"]),
+							footer: `OxyBot | help | ${cmd.category} | ${cmd.id}`,
+						},
+						command: cmd,
+					})
+				);
+			});
 			options.category.commands.forEach((cmd) => {
 				let command = message.client.commands.get(cmd);
 				embed.addField(generateSyntax(message, command, config.prefix), message.translate.get(["commands", command.id, "description"]));
-				menuOptions.options.push({
-					label: command.id,
-					value: command.id,
-				});
+				menu.addOptions({ label: command.id, value: command.id });
 			});
-			if (!message.parsed.params.noButtons) menus.push(new message.client.DInteractions.MessageDropDown(menuOptions));
-			buttonOptions = {
-				style: 1,
-				emoji: "⬅️",
-				label: message.translate.get("help.back"),
-				onClick(component, button) {
-					component.reply.defer();
-					message.client.commands.runCommand(component.message, "help", config, {
-						params: { interaction: true },
-					});
-				},
-			};
-			if (!message.parsed.params.noButtons) buttons.push(new message.client.DInteractions.MessageButton(buttonOptions));
+			if (!message.parsed.params.noButtons) msg.addMenu(menu);
+			if (!message.parsed.params.noButtons)
+				msg.addButton(
+					new Button()
+						.setStyle(1)
+						.setEmoji("⬅️")
+						.setLabel(message.translate.get("help.back"))
+						.onClick((interaction) => {
+							interaction.update(
+								generateMessage("home", message, config, {
+									embed: {
+										title: message.translate.get("help.title"),
+										thumbnail: "https://i.imgur.com/aTDGUhu.png",
+										footer: "OxyBot | help",
+									},
+								})
+							);
+						})
+				);
 			break;
 		case "command":
 			let _translate = message.translate.get(["commands", options.command.id, "arguments"]);
@@ -132,26 +138,30 @@ function generateMessage(type, message, config, options) {
 			for (let i in args) {
 				if (args[i].category !== "dev") embed.addField(_translate[i].name, _translate[i].description + (args[i].required ? "\n⚠ " + message.translate.get("help.required") : ""));
 			}
-			buttonOptions = {
-				style: 1,
-				emoji: "⬅️",
-				label: message.translate.get("help.back"),
-				onClick(component, button) {
-					component.reply.defer();
-					message.client.commands.runCommand(component.message, "help", config, {
-						params: { interaction: true },
-						arguments: [{ raw: options.command.category, original: options.command.category, type: "string" }],
-					});
-				},
-			};
-			if (!message.parsed.params.noButtons) buttons.push(new message.client.DInteractions.MessageButton(buttonOptions));
+			if (!message.parsed.params.noButtons)
+				msg.addButton(
+					new Button()
+						.setStyle(1)
+						.setEmoji("⬅️")
+						.setLabel(message.translate.get("help.back"))
+						.onClick((interaction) => {
+							let cat = message.client.commands.getCategory(options.command.category);
+							interaction.update(
+								generateMessage("category", message, config, {
+									embed: {
+										title: options.command.category,
+										thumbnail: cat.emojiURL,
+										footer: "OxyBot | help | " + options.command.category,
+									},
+									category: cat,
+								})
+							);
+						})
+				);
 			break;
 	}
-	result.embed = embed;
-	if (menus.length > 0) result.menus = menus;
-	if (buttons.length > 0) result.buttons = buttons;
-	if (content) result.content = content;
-	return result;
+	msg.addEmbed(embed)
+	return msg;
 }
 
 function generateSyntax(message, cmd, prefix) {

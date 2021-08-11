@@ -1,6 +1,6 @@
 const { Command } = require("../../commands");
-const { MessageEmbed } = require("discord.js");
 const settings = require("../../../config.json").guildSettings;
+const { Message, Button, Menu, MessageEmbed } = require("../../message");
 
 class Settings extends Command {
 	constructor() {
@@ -33,114 +33,66 @@ class Settings extends Command {
 	async run(message, config) {
 		if (message.parsed.params.interaction && message.author.id != message.client.user.id) message.parsed.params.interaction = false;
 		if (message.parsed.arguments.length === 1) {
-			message.parsed.arguments[0].raw = message.parsed.arguments[0].raw.replace(/\s/gmi, "_")
+			message.parsed.arguments[0].raw = message.parsed.arguments[0].raw.replace(/\s/gim, "_");
 			let setting = settings[message.parsed.arguments[0]?.raw.toLowerCase()];
-			if (!setting) return message.client.commands.runCommand(message, "settings", config, { params: { error: message.translate.get("settings.invalidSetting") } });
-			let name = message.parsed.arguments[0].raw.toLowerCase();
-			let msg = {
-				embed: new MessageEmbed()
-					.setTitle(message.translate.get(["guildSettings", name, "name"]))
-					.setDescription(message.translate.get(["guildSettings", name, "description"]))
-					.setFooter("OxyBot | settings | " + name)
-					.addField(message.translate.get("settings.currentValue"), config[name])
-					.setColor(Math.floor(Math.random() * 16777215)),
-			};
-			if (!message.parsed.params.noButtons)
-				msg.buttons = [
-					new message.client.DInteractions.MessageButton({
-						style: 1,
-						emoji: "⬅️",
-						label: message.translate.get("settings.back"),
-						onClick(component, button) {
-							component.reply.defer();
-							message.client.commands.runCommand(component.message, "settings", config, {
-								params: { interaction: true },
-							});
-						},
-					}),
-				];
-			if (setting.possibleValues) {
-				let menu = {
-					options: [],
-					placeholder: message.translate.get("settings.commandPlaceholder"),
-					async onUpdate(component, dropDown) {
-						component.reply.defer();
-						await message.client.db.setGuildSetting(message.guild.id, name, component.values[0]);
-						config[name] = component.values[0];
-						return message.client.commands.runCommand(component.message, "settings", config, {
-							params: { interaction: true },
-							arguments: [{ raw: name, original: name, type: "string" }],
-						});
-					},
-				};
-				setting.possibleValues.forEach((e) => {
-					if (config[name] != e) menu.options.push({ label: message.translate.get(["guildSettings", name, "possibleValues", e]), value: e });
-				});
-				if (!message.parsed.params.noButtons) msg.menus = [new message.client.DInteractions.MessageDropDown(menu)];
+			if (!setting) {
+				message.parsed.parameters.error = message.translate.get("settings.invalidSetting");
+				return message.channel.send(generateMessage("home", message, config, {}));
 			}
-			if (message.parsed.params.error) msg.content = message.parsed.params.error;
-			if (message.parsed.params.interaction) return message.edit(msg);
-			else return message.channel.send(msg);
+			let name = message.parsed.arguments[0].raw.toLowerCase();
+			return message.channel.send(
+				generateMessage("setting", message, config, {
+					setting,
+					name,
+				})
+			);
 		} else if (message.parsed.arguments.length === 2) {
-			message.parsed.arguments[0].raw = message.parsed.arguments[0].raw.replace(/\s/gmi, "_")
+			message.parsed.arguments[0].raw = message.parsed.arguments[0].raw.replace(/\s/gim, "_");
 			let setting = settings[message.parsed.arguments[0]?.raw.toLowerCase()];
-			if (!setting) return message.client.commands.runCommand(message, "settings", config, { params: { error: message.translate.get("settings.invalidSetting") } });
+			if (!setting) {
+				message.parameters.error = message.translate.get("settings.invalidSetting");
+				return message.channel.send(generateMessage("home", message, config, {}));
+			}
 			let name = message.parsed.arguments[0].raw.toLowerCase();
 			if (setting.possibleValues) {
 				if (setting.possibleValues.includes(message.parsed.arguments[1].raw)) {
 					await message.client.db.setGuildSetting(message.guild.id, name, message.parsed.arguments[1].raw);
 					config[name] = message.parsed.arguments[1].raw;
-					return message.client.commands.runCommand(message, "settings", config, {
-						arguments: [{ raw: message.parsed.arguments[0].raw.toLowerCase(), original: message.parsed.arguments[0]?.raw.toLowerCase(), type: "string" }],
-						params: { noButtons: true },
-					});
+					return message.channel.send(
+						generateMessage("setting", message, config, {
+							setting,
+							name,
+						})
+					);
 				} else {
-					return message.client.commands.runCommand(message, "settings", config, {
-						arguments: [{ raw: message.parsed.arguments[0].raw.toLowerCase(), original: message.parsed.arguments[0]?.raw.toLowerCase(), type: "string" }],
-						params: { error: message.translate.get("settings.invalidValue") },
-					});
+					message.parsed.parameters.error = message.translate.get("settings.invalidValue");
+					return message.channel.send(
+						generateMessage("setting", message, config, {
+							setting,
+							name,
+						})
+					);
 				}
 			} else if (setting.type === message.parsed.arguments[1].type) {
 				await message.client.db.setGuildSetting(message.guild.id, name, message.parsed.arguments[1].raw);
 				config[name] = message.parsed.arguments[1].raw;
-				return message.client.commands.runCommand(message, "settings", config, {
-					arguments: [{ raw: message.parsed.arguments[0].raw.toLowerCase(), original: message.parsed.arguments[0]?.raw.toLowerCase(), type: "string" }],
-					params: { noButtons: true },
-				});
+				return message.channel.send(
+					generateMessage("setting", message, config, {
+						setting,
+						name,
+					})
+				);
 			} else {
-				return message.client.commands.runCommand(message, "settings", config, {
-					arguments: [{ raw: message.parsed.arguments[0].raw.toLowerCase(), original: message.parsed.arguments[0]?.raw.toLowerCase(), type: "string" }],
-					params: { error: message.translate.get("settings.invalidValue") },
-				});
+				message.parsed.parameters.error = message.translate.get("settings.invalidValue");
+				return message.channel.send(
+					generateMessage("setting", message, config, {
+						setting,
+						name,
+					})
+				);
 			}
 		} else {
-			let msg = {
-				embed: new MessageEmbed()
-					.setTitle(message.translate.get("settings.title"))
-					.setDescription(message.translate.get("settings.description"))
-					.setFooter("OxyBot | settings")
-					.setColor(Math.floor(Math.random() * 16777215)),
-			};
-			let menuOptions = {
-				options: [],
-				placeholder: message.translate.get("settings.homePlaceholder"),
-				onUpdate(component, dropDown) {
-					component.reply.defer();
-					message.client.commands.runCommand(component.message, "settings", config, {
-						params: { interaction: true },
-						arguments: [{ raw: component.values[0], original: component.values[0], type: "string" }],
-					});
-				},
-			};
-			Object.entries(settings).forEach(([key, value]) => {
-				msg.embed.addField(message.translate.get(["guildSettings", key, "name"]), message.translate.get(["guildSettings", key, "description"]));
-				menuOptions.options.push({
-					label: message.translate.get(["guildSettings", key, "name"]),
-					value: key,
-				});
-			});
-			if (!message.parsed.params.noButtons) msg.menus = [new message.client.DInteractions.MessageDropDown(menuOptions)];
-			if (message.parsed.params.error) msg.content = message.parsed.params.error;
+			let msg = generateMessage("home", message, config, {});
 			if (message.parsed.params.interaction) return message.edit(msg);
 			else return message.channel.send(msg);
 		}
@@ -148,3 +100,76 @@ class Settings extends Command {
 }
 
 module.exports = Settings;
+
+function generateMessage(type, message, config, options) {
+	let msg = new Message();
+	if (message.parsed.parameters.error) msg.setContent(`⚠ **${message.parsed.parameters.error}**`);
+	let embed = new MessageEmbed().setColor(Math.floor(Math.random() * 16777215));
+	switch (type) {
+		default:
+		case "home": {
+			embed.setTitle(message.translate.get("settings.title")).setDescription(message.translate.get("settings.description")).setFooter("OxyBot | settings");
+			let menu = new Menu({
+				options: [],
+				placeholder: message.translate.get("settings.homePlaceholder"),
+				onUpdate(interaction) {
+					interaction.update(
+						generateMessage("setting", message, config, {
+							setting: settings[interaction.values[0]],
+							name: interaction.values[0],
+						})
+					);
+				},
+			});
+			Object.entries(settings).forEach(([key, value]) => {
+				embed.addField(message.translate.get(["guildSettings", key, "name"]), message.translate.get(["guildSettings", key, "description"]));
+				menu.addOptions({
+					label: message.translate.get(["guildSettings", key, "name"]),
+					value: key,
+				});
+			});
+			msg.addMenu(menu);
+			break;
+		}
+		case "setting": {
+			embed
+				.setTitle(message.translate.get(["guildSettings", options.name, "name"]))
+				.setDescription(message.translate.get(["guildSettings", options.name, "description"]))
+				.setFooter("OxyBot | settings | " + options.name)
+				.addField(message.translate.get("settings.currentValue"), config[options.name]);
+			let button = new Button({
+				style: 1,
+				emoji: "⬅️",
+				label: message.translate.get("settings.back"),
+				onClick(interaction) {
+					interaction.update(generateMessage("home", message, config, {}));
+				},
+			});
+			if (options.setting.possibleValues) {
+				let menu = new Menu({
+					options: [],
+					placeholder: message.translate.get("settings.commandPlaceholder"),
+					async onUpdate(interaction) {
+						await message.client.db.setGuildSetting(message.guild.id, options.name, interaction.values[0]);
+						if (options.name === "language") message.translate = new message.client.Translate({ messages: message.client.translate.getAllWithLanguage(interaction.values[0]) });
+						config[options.name] = interaction.values[0];
+						interaction.update(
+							generateMessage("setting", message, config, {
+								setting: settings[options.name],
+								name: options.name,
+							})
+						);
+					},
+				});
+				options.setting.possibleValues.forEach((e) => {
+					if (config[options.name] != e) menu.addOptions({ label: message.translate.get(["guildSettings", options.name, "possibleValues", e]), value: e });
+				});
+				msg.addMenu(menu);
+			}
+			msg.addButton(button);
+			break;
+		}
+	}
+	msg.addEmbed(embed);
+	return msg;
+}

@@ -1,5 +1,6 @@
 {
 	"debugLog": false,
+	"allowDevCommands": false,
 	"guildSettings": {
 		"language": {
 			"writable": true,

@@ -25,13 +25,6 @@ class Say extends Command {
 	}
 	async run(message, config) {
 		let args = message.parsed.arguments;
-		// if (args.length == 1 && (args.length === 2 ? args[1] !== "true" : true)) {
-		// 	message.channel.send(args[0]).then(() => Promise.resolve());
-		// } else if (args.length === 2 ? args[1] === "true" : false) {
-		// 	message.channel.send(args[0]).then((msg) => {
-		// 		message.delete().then(() => Promise.resolve());
-		// 	});
-		// }
 		if (args.length === 2 ? args[1]?.raw == "true" : false) {
 			message.channel
 				.send(args[0].raw)
