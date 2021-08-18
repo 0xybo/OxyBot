@@ -1,0 +1,71 @@
+html(theme="dark")
+	head 
+		meta(charset="utf-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
+		meta(property="og:type" content="website")
+		meta(property="og:url" content="https://oxybot.fr")
+		meta(property="og:site_name" content="OxyBot")
+		meta(property="og:keywords" content="discord,bot,oxybot")
+		meta(property="twitter:card" content="summary_large_image")
+		meta(property="og:locale" content="fr")
+		meta(data-react-helmet="true" charset="utf-8")
+		meta(data-react-helmet="true" property="og:title" content="OxyBot | Un bot comme les autres")
+		meta(data-react-helmet="true" property="og:description" content="Un bot Discord comme les autres")
+		meta(data-react-helmet="true" name="description" content="Un bot Discord comme les autres")
+		meta(data-react-helmet="true" property="og:image" content="img/icon.png")
+		meta(data-react-helmet="true" property="twitter:image" content="img/icon.png")
+		link(rel="icon" href="/img/icon.png" type="image/png")
+		script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+		script(src="/js/main.js")
+		link(rel="stylesheet" href="/css/main.css")
+		block head
+	body 
+		header 
+			a.logo(href="/")
+				svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.56 127.56")
+					g
+						circle(cx="63.78" cy="63.78" r="63.78" fill="#ff9c6e")
+						path(d="M51,56.82a7.24,7.24,0,0,1-7.4,7,7.08,7.08,0,1,1,.09-14.15A7.24,7.24,0,0,1,51,56.82Z" fill="black")
+						path(d="M83.68,63.78A7,7,0,0,1,76.54,57a6.8,6.8,0,0,1,6.58-7.24,7.15,7.15,0,0,1,7.51,6.94A7.25,7.25,0,0,1,83.68,63.78Z" fill="black")
+						path(d="M65.2,92H62.36A11.34,11.34,0,0,1,51,80.61H76.54A11.34,11.34,0,0,1,65.2,92Z" fill="black")
+				div(class="name") xyBot
+			.nav
+				.container
+					a.item(href="/") #{translate.web.main.home}
+					a.item(href="/about") #{translate.web.main.about}
+					a.item(href="/account/login") #{translate.web.main.login}
+			.buttons
+				svg.theme-changer.dark(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480")
+					path(fill="currentColor" d="M459.782,347.328c-4.288-5.28-11.488-7.232-17.824-4.96c-17.76,6.368-37.024,9.632-57.312,9.632    c-97.056,0-176-78.976-176-176c0-58.4,28.832-112.768,77.12-145.472c5.472-3.712,8.096-10.4,6.624-16.832    S285.638,2.4,279.078,1.44C271.59,0.352,264.134,0,256.646,0c-132.352,0-240,107.648-240,240s107.648,240,240,240    c84,0,160.416-42.688,204.352-114.176C464.55,360.032,464.038,352.64,459.782,347.328z")
+				svg.theme-changer.light(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor")
+					path(d="m12 3.457c-.414 0-.75-.336-.75-.75v-1.957c0-.414.336-.75.75-.75s.75.336.75.75v1.957c0 .414-.336.75-.75.75z")
+					path(d="m18.571 6.179c-.192 0-.384-.073-.53-.22-.293-.293-.293-.768 0-1.061l1.384-1.384c.293-.293.768-.293 1.061 0s.293.768 0 1.061l-1.384 1.384c-.147.146-.339.22-.531.22z")
+					path(d="m23.25 12.75h-1.957c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h1.957c.414 0 .75.336.75.75s-.336.75-.75.75z")
+					path(d="m19.955 20.705c-.192 0-.384-.073-.53-.22l-1.384-1.384c-.293-.293-.293-.768 0-1.061s.768-.293 1.061 0l1.384 1.384c.293.293.293.768 0 1.061-.147.147-.339.22-.531.22z")
+					path(d="m4.045 20.705c-.192 0-.384-.073-.53-.22-.293-.293-.293-.768 0-1.061l1.384-1.384c.293-.293.768-.293 1.061 0s.293.768 0 1.061l-1.384 1.384c-.147.147-.339.22-.531.22z")
+					path(d="m2.707 12.75h-1.957c-.414 0-.75-.336-.75-.75s.336-.75.75-.75h1.957c.414 0 .75.336.75.75s-.336.75-.75.75z")
+					path(d="m5.429 6.179c-.192 0-.384-.073-.53-.22l-1.384-1.384c-.293-.293-.293-.768 0-1.061s.768-.293 1.061 0l1.384 1.384c.293.293.293.768 0 1.061-.148.146-.339.22-.531.22z")
+					path(d="m15 21v1.25c0 .96-.79 1.75-1.75 1.75h-2.5c-.84 0-1.75-.64-1.75-2.04v-.96z")
+					path(d="m16.41 6.56c-1.64-1.33-3.8-1.85-5.91-1.4-2.65.55-4.8 2.71-5.35 5.36-.56 2.72.46 5.42 2.64 7.07.59.44 1 1.12 1.14 1.91v.01c.02-.01.05-.01.07-.01h6c.02 0 .03 0 .05.01v-.01c.14-.76.59-1.46 1.28-2 1.69-1.34 2.67-3.34 2.67-5.5 0-2.12-.94-4.1-2.59-5.44zm-.66 5.94c-.41 0-.75-.34-.75-.75 0-1.52-1.23-2.75-2.75-2.75-.41 0-.75-.34-.75-.75s.34-.75.75-.75c2.34 0 4.25 1.91 4.25 4.25 0 .41-.34.75-.75.75z")
+					path(d="m8.93 19.5h.07c-.02 0-.05 0-.07.01z")
+					path(d="m15.05 19.5v.01c-.02-.01-.03-.01-.05-.01z")
+				svg.collapse(viewBox="0 0 40 40")
+					path(fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M33.3327 10H6.66602V15H33.3327V10ZM6.66602 18.3317H33.3327V23.3317H6.66602V18.3317ZM6.66602 26.665H33.3327V31.665H6.66602V26.665Z")
+		#body
+			block body
+		footer
+			a.logo(href="/")
+				svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.56 127.56")
+					g
+						circle(cx="63.78" cy="63.78" r="63.78" fill="#ff9c6e")
+						path(d="M51,56.82a7.24,7.24,0,0,1-7.4,7,7.08,7.08,0,1,1,.09-14.15A7.24,7.24,0,0,1,51,56.82Z" fill="black")
+						path(d="M83.68,63.78A7,7,0,0,1,76.54,57a6.8,6.8,0,0,1,6.58-7.24,7.15,7.15,0,0,1,7.51,6.94A7.25,7.25,0,0,1,83.68,63.78Z" fill="black")
+						path(d="M65.2,92H62.36A11.34,11.34,0,0,1,51,80.61H76.54A11.34,11.34,0,0,1,65.2,92Z" fill="black")
+				div(class="name") xyBot
+			.links
+				a.item(href="https://discord.com/oauth2/authorize?client_id=662693245863723034&scope=bot&permissions=8589934583") #{translate.web.main.invite}
+			.pages
+				a.item(href="/") #{translate.web.main.home}
+				a.item(href="/about") #{translate.web.main.about}
+				a.item(href="/account/login") #{translate.web.main.login}
+

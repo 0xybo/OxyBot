@@ -128,7 +128,9 @@ function generateMessage(type, message, config, options) {
 					value: key,
 				});
 			});
-			msg.addMenu(menu);
+			msg.addMenu(menu,
+				true,
+				true);
 			break;
 		}
 		case "setting": {
@@ -164,9 +166,13 @@ function generateMessage(type, message, config, options) {
 				options.setting.possibleValues.forEach((e) => {
 					if (config[options.name] != e) menu.addOptions({ label: message.translate.get(["guildSettings", options.name, "possibleValues", e]), value: e });
 				});
-				msg.addMenu(menu);
+				msg.addMenu(menu,
+					true,
+					true);
 			}
-			msg.addButton(button);
+			msg.addButton(button,
+				true,
+				true);
 			break;
 		}
 	}

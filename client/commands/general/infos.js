@@ -18,6 +18,7 @@ class Infos extends Command {
 		this.setBotPermissions([]);
 	}
 	async run(message, config) {
+		message.channel.sendTyping();
 		if (message.parsed.arguments.length === 0) {
 			let msg = new Message()
 				.addEmbed(new MessageEmbed().setTitle(message.translate.get("infos.homeTitle")).setDescription(message.translate.get("infos.homeDescription", { prefix: config.prefix })))
@@ -26,10 +27,11 @@ class Infos extends Command {
 						style: 1,
 						label: message.translate.get("infos.you"),
 						async onClick(interaction) {
-							console.log(generateMessage("user", message, config, interaction.user));
 							interaction.update(await generateMessage("user", message, config, interaction.user));
 						},
-					})
+					}),
+					true,
+					true
 				)
 				.addButton(
 					new Button({
@@ -38,7 +40,9 @@ class Infos extends Command {
 						async onClick(interaction) {
 							interaction.update(await generateMessage("channel", message, config, interaction.channel));
 						},
-					})
+					}),
+					true,
+					true
 				)
 				.addButton(
 					new Button({
@@ -47,7 +51,9 @@ class Infos extends Command {
 						async onClick(interaction) {
 							interaction.update(await generateMessage("guild", message, config, interaction.guild));
 						},
-					})
+					}),
+					true,
+					true
 				)
 				.addButton(
 					new Button({
@@ -56,7 +62,9 @@ class Infos extends Command {
 						async onClick(interaction) {
 							interaction.update(await generateMessage("bot", message, config, null));
 						},
-					})
+					}),
+					true,
+					true
 				);
 			message.channel.send(msg);
 		} else if (message.parsed.arguments.length > 0) {
@@ -155,7 +163,9 @@ async function generateMessage(type, message, config, data) {
 						async onClick(interaction) {
 							interaction.update(await generateMessage("category", message, config, data.parent));
 						},
-					})
+					}),
+					true,
+					true
 				);
 			}
 			if (data.rateLimitPerUser ? data.rateLimitPerUser != 0 : false)
@@ -176,7 +186,9 @@ async function generateMessage(type, message, config, data) {
 						async onClick(interaction) {
 							interaction.channel.send((await message.channel.createInvite({ reason: "interaction command info" })).url);
 						},
-					})
+					}),
+					true,
+					true
 				);
 			}
 			msg.addEmbed(embed);
@@ -209,7 +221,9 @@ async function generateMessage(type, message, config, data) {
 						async onClick(interaction) {
 							interaction.channel.send((await message.channel.createInvite({ reason: "interaction command info" })).url);
 						},
-					})
+					}),
+					true,
+					true
 				);
 			}
 			msg.addEmbed(embed);

@@ -1,5 +1,6 @@
 const sqlite = require("sqlite");
 const sqlite3 = require("sqlite3");
+const bcrypt = require("bcrypt");
 
 class Db {
 	constructor(_this) {

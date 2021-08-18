@@ -36,7 +36,7 @@ class Client extends Discord.Client {
 		return new Client({ commands }, Bot);
 	}
 	async start() {
-		return await this.login(process.env.token);
+		return await this.login(process.env.TOKEN);
 	}
 	async stop() {
 		this.destroy();

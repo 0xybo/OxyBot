@@ -1,16 +1,22 @@
 const { MessageSelectMenu, MessageButton, MessageActionRow, MessageEmbed } = require("discord.js");
 
 const listeners = {
-	clickButton: {},
-	clickMenu: {},
 };
-var id = 0;
+let id = 0,
+	msgId = 0;
 
 function registerClient(client) {
 	if (client._registered) return false;
 	client._registered = true;
 	client.on("interactionCreate", (interaction) => {
-		listeners[interaction.isButton() ? "clickButton" : interaction.isSelectMenu() ? "clickMenu" : "null"]?.[interaction.component.customId]?.callback(interaction);
+		let listener = listeners[interaction.component.customId];
+		if (!listener) return false;
+		listener.callback(interaction);
+		if (listener.once) listener.destroy();
+		if (listener.destroyWhenOtherButtonClicked) 
+			Object.entries(listeners).forEach(([key, value]) => {
+				if (value._message._id === listener._message._id) value.destroy();
+			});
 	});
 	return true;
 }
@@ -18,16 +24,25 @@ function registerClient(client) {
 class Message {
 	constructor() {
 		this.components = [];
+		this._components = [];
+		this._id = ++msgId;
 	}
-	addMenu(menu) {
+	addMenu(menu, once = false, destroyWhenOtherButtonClicked = false) {
 		if (this.components.length === 5) throw new Error("You connot add a new component");
 		let actionRow = new MessageActionRow();
-		listeners.clickMenu[menu.customId] = menu;
 		actionRow.addComponents(menu);
+		menu.once = once;
+		menu.destroyWhenOtherButtonClicked = destroyWhenOtherButtonClicked;
+		menu.destroy = function () {
+			delete listeners[menu.customId];
+		};
+		menu._message = this;
+		this._components.push(menu);
+		listeners[menu.customId] = menu;
 		this.components.push(actionRow);
 		return this;
 	}
-	addButton(button) {
+	addButton(button, once = false, destroyWhenOtherButtonClicked = false) {
 		if (this.components.length == 0) {
 			let actionRow = new MessageActionRow();
 			actionRow.addComponents(button);
@@ -40,7 +55,14 @@ class Message {
 		} else {
 			this.components[this.components.length - 1].addComponents(button);
 		}
-		listeners.clickButton[button.customId] = button;
+		button.once = once;
+		button.destroyWhenOtherButtonClicked = destroyWhenOtherButtonClicked;
+		button.destroy = function () {
+			delete listeners[button.customId];
+		};
+		button._message = this;
+		this._components.push(button);
+		listeners[button.customId] = button;
 		return this;
 	}
 	setContent(content) {

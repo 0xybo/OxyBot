@@ -17,20 +17,6 @@
 			"description": "Commandes du développeur"
 		}
 	},
-	"clear": {
-		"success": "{{quantity}} messages ont été supprimés !",
-		"notAll": "{{quantity}} messages ont été supprimés ! Une limitation de Discord empêche la suppression au-delà de 14 jours."
-	},
-	"command": {
-		"title": "Interface de gestion des commandes du bot sur le serveur.",
-		"description": "Grâce à cette interface vous pouvez activer ou désactiver des commandes sur le serveur.\nPour cela taper la commande `{{prefix}}command {votre commande}`.",
-		"success": "La commande {{command}} a été {{state}} !",
-		"enabled": "activé",
-		"disabled": "désactivé",
-		"commandsEnabled": "Commandes activés",
-		"commandsDisabled": "Commandes désactivés",
-		"isCommand": "Vous ne pouvez pas désactiver la commande `command` car vous ne pourrez pas la réactiver."
-	},
 	"commands": {
 		"say": {
 			"description": "Fait dire un message au bot.",
@@ -105,13 +91,6 @@
 			]
 		}
 	},
-	"error": {
-		"invalidArgument": "L'argument n°{{argumentIndex}} est invalide !",
-		"invalidPermissions": "Vous n'avez pas les autorisations suffisantes pour exécuter cette commande.",
-		"argumentRequired": "L'argument n°{{argumentIndex}} est requis !",
-		"commandFailed": "La commande a échoué, veuillez réessayer en modifiant les arguments.",
-		"invalidBotPermissions": "Les autorisations du bot sont insuffisantes !"
-	},
 	"guildSettings": {
 		"language": {
 			"name": "Langue",
@@ -134,68 +113,105 @@
 			}
 		}
 	},
-	"help": {
-		"title": "Aide d'utilisation pour ce bot",
-		"homeDescription": "Bienvenue dans le menu d'aide de ce bot, vous pouvez sélectionner une catégorie avec le menu déroulant pour voir les différentes commandes.",
-		"homeMenuPlaceholder": "Choisir une catégorie ...",
-		"categoryMenuPlaceholder": "Choisir une commande ...",
-		"required": "requis",
-		"back": "Retour"
+	"bot": {
+		"clear": {
+			"success": "{{quantity}} messages ont été supprimés !",
+			"notAll": "{{quantity}} messages ont été supprimés ! Une limitation de Discord empêche la suppression au-delà de 14 jours."
+		},
+		"command": {
+			"title": "Interface de gestion des commandes du bot sur le serveur.",
+			"description": "Grâce à cette interface vous pouvez activer ou désactiver des commandes sur le serveur.\nPour cela taper la commande `{{prefix}}command {votre commande}`.",
+			"success": "La commande {{command}} a été {{state}} !",
+			"enabled": "activé",
+			"disabled": "désactivé",
+			"commandsEnabled": "Commandes activés",
+			"commandsDisabled": "Commandes désactivés",
+			"isCommand": "Vous ne pouvez pas désactiver la commande `command` car vous ne pourrez pas la réactiver."
+		},
+		"error": {
+			"invalidArgument": "L'argument n°{{argumentIndex}} est invalide !",
+			"invalidPermissions": "Vous n'avez pas les autorisations suffisantes pour exécuter cette commande.",
+			"argumentRequired": "L'argument n°{{argumentIndex}} est requis !",
+			"commandFailed": "La commande a échoué, veuillez réessayer en modifiant les arguments.",
+			"invalidBotPermissions": "Les autorisations du bot sont insuffisantes !"
+		},
+		"help": {
+			"title": "Aide d'utilisation pour ce bot",
+			"homeDescription": "Bienvenue dans le menu d'aide de ce bot, vous pouvez sélectionner une catégorie avec le menu déroulant pour voir les différentes commandes.",
+			"homeMenuPlaceholder": "Choisir une catégorie ...",
+			"categoryMenuPlaceholder": "Choisir une commande ...",
+			"required": "requis",
+			"back": "Retour"
+		},
+		"infos": {
+			"accountAge": "Age du compte",
+			"accountAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
+			"avatarLink": "Lien de l'avatar",
+			"bot": "Le bot",
+			"categoryAge": "Age de la catégorie",
+			"categoryAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
+			"channel": "Le salon",
+			"channelAge": "Age du salon",
+			"channelAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
+			"channelMemberCount": "Nombre de membres dans ce salon",
+			"channelQuantity": "Nombre de salon",
+			"createInvite": "Créer une invitation pour ce salon",
+			"createdDate": "Date de création",
+			"emojisQuantity": "Nombre d'émojis",
+			"false": "Non",
+			"homeDescription": "Vous pouvez grâce aux boutons ci-dessus sélectionner le type d'informations ou utiliser `{{prefix}}infos {un utilisateur, un salon, une category, un serveur}`.",
+			"homeTitle": "Accueil du menu d'informations",
+			"iconURL": "Lien de l'icon",
+			"id": "Identifiant",
+			"joinAge": "Age du membre",
+			"joinAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
+			"joinedAt": "Date d'arrivée",
+			"lastMessage": "Dernier message",
+			"lastMessageFormat": "Il y a {{D}} jour(s) {{H}} heure(s) {{M}} minute(s) et {{S}} seconde(s)",
+			"link": "Lien",
+			"memberCount": "Nombre de membre",
+			"notFound": "Impossible de trouver les informations correspondant à `{{arg0}}`.",
+			"nsfw": "Mode nsfw",
+			"owner": "Propriétaire",
+			"parentCategory": "Catégorie",
+			"rateLimitPerUser": "Durée du mode lent",
+			"rateLimitPerUserFormat": "{{H}} heure(s) {{M}} minute(s) et {{S}} seconde(s)",
+			"server": "Le serveur",
+			"serverAge": "Age du serveur",
+			"serverAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
+			"stickersAndEmojisQuantity": "Nombre de stickers et d'emojis",
+			"true": "Oui",
+			"version": "Version",
+			"you": "Vous",
+			"categoryInfos": "Obtenir des informations sur la catégorie"
+		},
+		"main": {
+			"prefix": "Le prefix actuel est `{{prefix}}`.",
+			"disabledCommand": "La commande est désactivée sur ce serveur."
+		},
+		"settings": {
+			"title": "Interface de configuration de ce bot",
+			"description": "Bienvenue dans le menu de configuration d'aide de ce bot. Vous pouvez sélectionner un paramètre avec le menu déroulant pour voir des informations supplémentaires.Ce message vous permet de modifier certains paramètres avec des choix prédéfinis par le biais de menus déroulants ou de boutons.",
+			"homePlaceholder": "Choisir un paramètre...",
+			"currentValue": "Valeur actuelle",
+			"back": "Retour",
+			"commandPlaceholder": "Choisir une valeur pour le paramètre...",
+			"invalidValue": "La valeur renseignée est invalide.",
+			"invalidSetting": "La paramètre demandé n'existe pas."
+		}
 	},
-	"infos": {
-		"accountAge": "Age du compte",
-		"accountAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
-		"avatarLink": "Lien de l'avatar",
-		"bot": "Le bot",
-		"categoryAge": "Age de la catégorie",
-		"categoryAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
-		"channel": "Le salon",
-		"channelAge": "Age du salon",
-		"channelAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
-		"channelMemberCount": "Nombre de membres dans ce salon",
-		"channelQuantity": "Nombre de salon",
-		"createInvite": "Créer une invitation pour ce salon",
-		"createdDate": "Date de création",
-		"emojisQuantity": "Nombre d'émojis",
-		"false": "Non",
-		"homeDescription": "Vous pouvez grâce aux boutons ci-dessus sélectionner le type d'informations ou utiliser `{{prefix}}infos {un utilisateur, un salon, une category, un serveur}`.",
-		"homeTitle": "Accueil du menu d'informations",
-		"iconURL": "Lien de l'icon",
-		"id": "Identifiant",
-		"joinAge": "Age du membre",
-		"joinAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
-		"joinedAt": "Date d'arrivée",
-		"lastMessage": "Dernier message",
-		"lastMessageFormat": "Il y a {{D}} jour(s) {{H}} heure(s) {{M}} minute(s) et {{S}} seconde(s)",
-		"link": "Lien",
-		"memberCount": "Nombre de membre",
-		"notFound": "Impossible de trouver les informations correspondant à `{{arg0}}`.",
-		"nsfw": "Mode nsfw",
-		"owner": "Propriétaire",
-		"parentCategory": "Catégorie",
-		"rateLimitPerUser": "Durée du mode lent",
-		"rateLimitPerUserFormat": "{{H}} heure(s) {{M}} minute(s) et {{S}} seconde(s)",
-		"server": "Le serveur",
-		"serverAge": "Age du serveur",
-		"serverAgeFormat": "{{Y}} an(s) {{W}} semaine(s) {{D}} jour(s) et {{H}} heure(s)",
-		"stickersAndEmojisQuantity": "Nombre de stickers et d'emojis",
-		"true": "Oui",
-		"version": "Version",
-		"you": "Vous",
-    "categoryInfos": "Obtenir des informations sur la catégorie"
-	},
-	"main": {
-		"prefix": "Le prefix actuel est `{{prefix}}`.",
-		"disabledCommand": "La commande est désactivée sur ce serveur."
-	},
-	"settings": {
-		"title": "Interface de configuration de ce bot",
-		"description": "Bienvenue dans le menu de configuration d'aide de ce bot. Vous pouvez sélectionner un paramètre avec le menu déroulant pour voir des informations supplémentaires.Ce message vous permet de modifier certains paramètres avec des choix prédéfinis par le biais de menus déroulants ou de boutons.",
-		"homePlaceholder": "Choisir un paramètre...",
-		"currentValue": "Valeur actuelle",
-		"back": "Retour",
-		"commandPlaceholder": "Choisir une valeur pour le paramètre...",
-		"invalidValue": "La valeur renseignée est invalide.",
-		"invalidSetting": "La paramètre demandé n'existe pas."
+	"web": {
+		"main": {
+			"home": "Accueil",
+			"about": "À propos de nous",
+			"login": "Se connecter"
+		},
+		"404": {
+			"title": "Erreur 404 : Page introuvable",
+			"description": "La page demandée n'existe pas."
+		},
+		"home": {
+			"title": "Accueil"
+		}
 	}
 }

@@ -42,7 +42,7 @@ class Translate {
 		return result
 	}
 	getAllWithLanguage(language) {
-		return this.messages[language] || this.messages.en;
+		return this.messages[language] || this.messages["en-GB"];
 	}
 }
 

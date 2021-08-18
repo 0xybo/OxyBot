@@ -17,8 +17,8 @@ class Logger {
 			console.log(safe.red(safe.bold(message.stack || message)));
 			fs.appendFile(logFilePath, (message.stack || message) + "\n", () => {});
 		} else {
-			console.log(safe.red(safe.bold(`[${this.name}][Error]: ${message}`)));
 			let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][Error] : ${message}`;
+			console.log(safe.red(safe.bold(msg)));
 			fs.appendFile(logFilePath, msg + "\n", () => {});
 		}
 		return;
@@ -29,8 +29,8 @@ class Logger {
 	 * @returns {Void}
 	 */
 	warn(message) {
-		console.log(safe.yellow(safe.bold(`[${this.name}][Warning]: ${message}`)));
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][Warning] : ${message}`;
+		console.log(safe.yellow(safe.bold(msg)));
 		fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}
@@ -40,8 +40,8 @@ class Logger {
 	 * @returns {Void}
 	 */
 	info(message) {
-		console.log(safe.gray(safe.bold(`[${this.name}][INFO]: ${message}`)));
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][INFO] : ${message}`;
+		console.log(safe.gray(safe.bold(msg)));
 		fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}
@@ -51,8 +51,8 @@ class Logger {
 	 * @returns {Void}
 	 */
 	ok(message) {
-		console.log(safe.cyan(safe.bold(`[${this.name}][OK]: ${message}`)));
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][OK] : ${message}`;
+		console.log(safe.cyan(safe.bold(msg)));
 		fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}
@@ -62,8 +62,8 @@ class Logger {
 	 * @returns {Void}
 	 */
 	progress(message) {
-		console.log(safe.blue(safe.bold(`[${this.name}][Progress]: ${message}`)));
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][Progress] : ${message}`;
+		console.log(safe.blue(safe.bold(msg)));
 		fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}
@@ -73,8 +73,8 @@ class Logger {
 	 * @returns {Void}
 	 */
 	debug(message) {
-		if (this.debugLog) console.log(safe.gray(`[${this.name}][Debug]: ${message}`));
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][Debug] : ${message}`;
+		if (this.debugLog) console.log(safe.gray(msg));
 		fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}

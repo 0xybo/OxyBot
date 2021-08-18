@@ -113,88 +113,104 @@
 			}
 		}
 	},
-	"error": {
-		"invalidArgument": "The argument #{{argumentIndex}} is invalid!",
-		"invalidPermissions": "You do not have sufficient permissions to run this command.",
-		"argumentRequired": "The argument #{{argumentIndex}} is required!",
-		"commandFailed": "The command failed, please try again by changing the arguments.",
-		"invalidBotPermissions": "Bot permissions are insufficient!"
+	"bot": {
+		"error": {
+			"invalidArgument": "The argument #{{argumentIndex}} is invalid!",
+			"invalidPermissions": "You do not have sufficient permissions to run this command.",
+			"argumentRequired": "The argument #{{argumentIndex}} is required!",
+			"commandFailed": "The command failed, please try again by changing the arguments.",
+			"invalidBotPermissions": "Bot permissions are insufficient!"
+		},
+		"help": {
+			"title": "User help for this bot",
+			"homeDescription": "Welcome to the help menu of this bot, you can select a category with the drop down menu to see the different commands.",
+			"homeMenuPlaceholder": "Choose a category ...",
+			"categoryMenuPlaceholder": "Choose a command ...",
+			"required": "required",
+			"back": "Back"
+		},
+		"main": {
+			"prefix": "The current prefix is `{{prefix}}`.",
+			"disabledCommand": "The command is disabled on this server."
+		},
+		"settings": {
+			"title": "Configuration interface of this bot",
+			"description": "Welcome to the help configuration menu of this bot. You can select a setting with the drop-down menu to see additional information.This message allows you to modify some settings with predefined choices through drop-down menus or buttons.",
+			"homePlaceholder": "Choose a parameter...",
+			"currentValue": "Current value",
+			"back": "Back",
+			"commandPlaceholder": "Choose a value for the parameter...",
+			"invalidValue": "The value entered is invalid.",
+			"invalidSetting": "The requested setting does not exist."
+		},
+		"clear": {
+			"success": "{{quantity}} messages have been deleted!",
+			"notAll": "{{quantity}} messages have been deleted! A Discord limitation prevents deletion beyond 14 days."
+		},
+		"command": {
+			"title": "Interface for managing bot commands on the server.",
+			"description": "With this interface you can enable or disable commands on the server. To do this type the command `{{prefix}}command {your command}`.",
+			"success": "The {{command}} command has been {{state}}!",
+			"enabled": "activated",
+			"disabled": "disabled",
+			"commandsEnabled": "Commands enabled",
+			"commandsDisabled": "Commands disabled",
+			"isCommand": "You can't disable the `command` command because you won't be able to re-enable it."
+		},
+		"info": {
+			"accountAge": "Age of the account",
+			"accountAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
+			"avatarLink": "Link of the avatar",
+			"bot": "The bot",
+			"categoryAge": "Age of the category",
+			"categoryAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
+			"channel": "The salon",
+			"channelAge": "Age of the show",
+			"channelAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
+			"channelMemberCount": "Number of members in this channel",
+			"channelQuantity": "Number of channels",
+			"createInvite": "Create an invitation for this channel",
+			"createdDate": "Date of creation",
+			"emojisQuantity": "Number of emojis",
+			"false": "No",
+			"homeDescription": "You can use the buttons above to select the type of information or use `{{prefix}}info {a user, a room, a category, a server}`.",
+			"homeTitle": "Home of the information menu",
+			"iconURL": "Icon link",
+			"id": "Identifier",
+			"joinAge": "Age of member",
+			"joinAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
+			"joinedAt": "Date of arrival",
+			"lastMessage": "Last message",
+			"lastMessageFormat": "There are {{D}} day(s) {{H}} hour(s) {{M}} minute(s) and {{S}} second(s)",
+			"link": "Link",
+			"memberCount": "Number of members",
+			"notFound": "Unable to find the information corresponding to `{{arg0}}`.",
+			"nsfw": "nsfw mode",
+			"owner": "Owner",
+			"parentCategory": "Category",
+			"rateLimitPerUser": "Slow mode duration",
+			"rateLimitPerUserFormat": "{{H}} hour(s) {{M}} minute(s) and {{S}} second(s)",
+			"server": "The server",
+			"serverAge": "Age of the server",
+			"serverAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
+			"stickersAndEmojisQuantity": "Number of stickers and emojis",
+			"true": "Yes",
+			"version": "Version",
+			"you": "You"
+		}
 	},
-	"help": {
-		"title": "User help for this bot",
-		"homeDescription": "Welcome to the help menu of this bot, you can select a category with the drop down menu to see the different commands.",
-		"homeMenuPlaceholder": "Choose a category ...",
-		"categoryMenuPlaceholder": "Choose a command ...",
-		"required": "required",
-		"back": "Back"
-	},
-	"main": {
-		"prefix": "The current prefix is `{{prefix}}`.",
-		"disabledCommand": "The command is disabled on this server."
-	},
-	"settings": {
-		"title": "Configuration interface of this bot",
-		"description": "Welcome to the help configuration menu of this bot. You can select a setting with the drop-down menu to see additional information.This message allows you to modify some settings with predefined choices through drop-down menus or buttons.",
-		"homePlaceholder": "Choose a parameter...",
-		"currentValue": "Current value",
-		"back": "Back",
-		"commandPlaceholder": "Choose a value for the parameter...",
-		"invalidValue": "The value entered is invalid.",
-		"invalidSetting": "The requested setting does not exist."
-	},
-	"clear": {
-		"success": "{{quantity}} messages have been deleted!",
-		"notAll": "{{quantity}} messages have been deleted! A Discord limitation prevents deletion beyond 14 days."
-	},
-	"command": {
-		"title": "Interface for managing bot commands on the server.",
-		"description": "With this interface you can enable or disable commands on the server. To do this type the command `{{prefix}}command {your command}`.",
-		"success": "The {{command}} command has been {{state}}!",
-		"enabled": "activated",
-		"disabled": "disabled",
-		"commandsEnabled": "Commands enabled",
-		"commandsDisabled": "Commands disabled",
-		"isCommand": "You can't disable the `command` command because you won't be able to re-enable it."
-	},
-	"info": {
-		"accountAge": "Age of the account",
-		"accountAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
-		"avatarLink": "Link of the avatar",
-		"bot": "The bot",
-		"categoryAge": "Age of the category",
-		"categoryAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
-		"channel": "The salon",
-		"channelAge": "Age of the show",
-		"channelAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
-		"channelMemberCount": "Number of members in this channel",
-		"channelQuantity": "Number of channels",
-		"createInvite": "Create an invitation for this channel",
-		"createdDate": "Date of creation",
-		"emojisQuantity": "Number of emojis",
-		"false": "No",
-		"homeDescription": "You can use the buttons above to select the type of information or use `{{prefix}}info {a user, a room, a category, a server}`.",
-		"homeTitle": "Home of the information menu",
-		"iconURL": "Icon link",
-		"id": "Identifier",
-		"joinAge": "Age of member",
-		"joinAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
-		"joinedAt": "Date of arrival",
-		"lastMessage": "Last message",
-		"lastMessageFormat": "There are {{D}} day(s) {{H}} hour(s) {{M}} minute(s) and {{S}} second(s)",
-		"link": "Link",
-		"memberCount": "Number of members",
-		"notFound": "Unable to find the information corresponding to `{{arg0}}`.",
-		"nsfw": "nsfw mode",
-		"owner": "Owner",
-		"parentCategory": "Category",
-		"rateLimitPerUser": "Slow mode duration",
-		"rateLimitPerUserFormat": "{{H}} hour(s) {{M}} minute(s) and {{S}} second(s)",
-		"server": "The server",
-		"serverAge": "Age of the server",
-		"serverAgeFormat": "{{Y}} year(s) {{W}} week(s) {{D}} day(s) and {{H}} hour(s)",
-		"stickersAndEmojisQuantity": "Number of stickers and emojis",
-		"true": "Yes",
-		"version": "Version",
-		"you": "You"
+	"web": {
+		"main": {
+			"home": "Home",
+			"about": "About us",
+			"login": "Sign in"
+		},
+		"404": {
+			"title": "Error 404 : Page not found",
+			"description": "The requested page does not exist."
+		},
+		"home": {
+			"title": "Home"
+		}
 	}
 }

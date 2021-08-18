@@ -1,4 +1,6 @@
 {
+	"startClient": false,
+	"startWeb": true,
 	"debugLog": false,
 	"allowDevCommands": false,
 	"guildSettings": {
@@ -25,5 +27,18 @@
 				"tag": "Albatros#0216"
 			}
 		}
-	}
+	},
+	"pages": [
+		{
+			"name": "home",
+			"path": "/",
+			"type": "page",
+			"request": ["get"]
+		},
+		{
+			"name": "account",
+			"path": "/account",
+			"type": "router"
+		}
+	]
 }

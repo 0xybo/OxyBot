@@ -30,8 +30,8 @@ class Bot {
 			await this.loadClient();
 			await this.loadWeb();
 
-			await this.startClient();
-			await this.startWeb();
+			if(this.config.startClient) await this.startClient();
+			if(this.config.startWeb) await this.startWeb();
 		})();
 	}
 	async startWeb() {

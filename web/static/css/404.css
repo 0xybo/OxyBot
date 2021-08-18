@@ -1,0 +1,33 @@
+#body {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: nowrap;
+}
+#body .image {
+	width: 400px;
+}
+#body .text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px
+}
+#body .text a {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px;
+    background: #5865f2;
+    border-radius: 10px;
+}
+
+#body .text a:hover {background: #5865f2d6;}
+
+@media screen and (max-width: 880px) {
+	#body {
+		flex-direction: column;
+	}
+    #body .text {
+        margin-left: 0
+    }
+}

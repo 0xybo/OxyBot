@@ -1,5 +1,5 @@
 const Command = require("../../commands").Command;
-const { Message,Button, Menu, MessageEmbed } = require("../../message");
+const { Message, Button, Menu, MessageEmbed } = require("../../message");
 
 class Help extends Command {
 	constructor() {
@@ -56,13 +56,13 @@ class Help extends Command {
 
 function generateMessage(type, message, config, options) {
 	let msg = new Message();
-	if(message.parsed.parameters.error) msg.setContent(`\`\`\`diff\n- ${message.parsed.parameters.error}\n\`\`\``)
+	if (message.parsed.parameters.error) msg.setContent(`\`\`\`diff\n- ${message.parsed.parameters.error}\n\`\`\``);
 	let embed = new MessageEmbed().setColor(Math.floor(Math.random() * 16777215));
 	if (options.embed.title) embed.setTitle(options.embed.title);
 	if (options.embed.thumbnail) embed.setThumbnail(options.embed.thumbnail);
 	if (options.embed.footer) embed.setFooter(options.embed.footer);
 	if (options.embed.description) embed.setDescription(options.embed.description);
-	let menu
+	let menu;
 
 	switch (type) {
 		default:
@@ -91,7 +91,7 @@ function generateMessage(type, message, config, options) {
 					});
 				}
 			});
-			if (!message.parsed.parameters.noButtons) msg.addMenu(menu);
+			if (!message.parsed.parameters.noButtons) msg.addMenu(menu, true, true);
 			break;
 		case "category":
 			menu = new Menu().setPlaceholder(message.translate.get("help.categoryMenuPlaceholder")).onUpdate((interaction) => {
@@ -112,7 +112,7 @@ function generateMessage(type, message, config, options) {
 				embed.addField(generateSyntax(message, command, config.prefix), message.translate.get(["commands", command.id, "description"]));
 				menu.addOptions({ label: command.id, value: command.id });
 			});
-			if (!message.parsed.params.noButtons) msg.addMenu(menu);
+			if (!message.parsed.params.noButtons) msg.addMenu(menu, true, true);
 			if (!message.parsed.params.noButtons)
 				msg.addButton(
 					new Button()
@@ -129,7 +129,9 @@ function generateMessage(type, message, config, options) {
 									},
 								})
 							);
-						})
+						}),
+					true,
+					true
 				);
 			break;
 		case "command":
@@ -156,11 +158,13 @@ function generateMessage(type, message, config, options) {
 									category: cat,
 								})
 							);
-						})
+						}),
+					true,
+					true
 				);
 			break;
 	}
-	msg.addEmbed(embed)
+	msg.addEmbed(embed);
 	return msg;
 }
 

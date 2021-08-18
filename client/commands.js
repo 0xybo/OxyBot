@@ -45,7 +45,7 @@ class Commands {
 		return new Commands({ commands: _commands, categories: _categories, logger });
 	}
 	async run(cmd, message, config) {
-		message.translate = new message.client.Translate({ messages: message.client.translate.getAllWithLanguage(config.language) });
+		message.translate = new message.client.Translate({ messages: message.client.translate.get("bot", null, config.language) });
 		let args = cmd.arguments;
 		if (cmd.category === "dev" && message.author.id != setting.informations.owner.discord.id) return false;
 		if (config.disabled_commands.includes(cmd.id)) return message.channel.send(message.translate.get("main.disabledCommand"));
