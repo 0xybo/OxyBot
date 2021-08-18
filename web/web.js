@@ -56,7 +56,7 @@ class Web {
 	}
 	start() {
 		return new Promise((resolve, reject) => {
-			this.app.listen(3000, () => {
+			this.app.listen(process.env.PORT || 3000, () => {
 				this.logger.info("Server running on http://localhost:3000");
 				resolve();
 			});
