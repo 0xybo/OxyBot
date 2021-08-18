@@ -2,6 +2,7 @@
 	"startClient": false,
 	"startWeb": true,
 	"debugLog": false,
+	"createLogFile": false,
 	"allowDevCommands": false,
 	"guildSettings": {
 		"language": {

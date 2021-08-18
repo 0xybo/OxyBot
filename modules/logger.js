@@ -1,9 +1,10 @@
 const safe = require("colors/safe");
 const fs = require("fs");
+const config = require("../config.json");
 
 class Logger {
-	constructor(name, debugLog) {
-		if (debugLog) this.debugLog = true;
+	constructor(name) {
+		if (config.debugLog) this.debugLog = true;
 		else this.debugLog = false;
 		this.name = name;
 	}
@@ -15,11 +16,11 @@ class Logger {
 	error(message) {
 		if (message.stack) {
 			console.log(safe.red(safe.bold(message.stack || message)));
-			fs.appendFile(logFilePath, (message.stack || message) + "\n", () => {});
+			if (config.createLogFile) fs.appendFile(logFilePath, (message.stack || message) + "\n", () => {});
 		} else {
 			let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][Error] : ${message}`;
 			console.log(safe.red(safe.bold(msg)));
-			fs.appendFile(logFilePath, msg + "\n", () => {});
+			if (config.createLogFile) fs.appendFile(logFilePath, msg + "\n", () => {});
 		}
 		return;
 	}
@@ -31,7 +32,7 @@ class Logger {
 	warn(message) {
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][Warning] : ${message}`;
 		console.log(safe.yellow(safe.bold(msg)));
-		fs.appendFile(logFilePath, msg + "\n", () => {});
+		if (config.createLogFile) fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}
 	/**
@@ -42,7 +43,7 @@ class Logger {
 	info(message) {
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][INFO] : ${message}`;
 		console.log(safe.gray(safe.bold(msg)));
-		fs.appendFile(logFilePath, msg + "\n", () => {});
+		if (config.createLogFile) fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}
 	/**
@@ -53,7 +54,7 @@ class Logger {
 	ok(message) {
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][OK] : ${message}`;
 		console.log(safe.cyan(safe.bold(msg)));
-		fs.appendFile(logFilePath, msg + "\n", () => {});
+		if (config.createLogFile) fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}
 	/**
@@ -64,7 +65,7 @@ class Logger {
 	progress(message) {
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][Progress] : ${message}`;
 		console.log(safe.blue(safe.bold(msg)));
-		fs.appendFile(logFilePath, msg + "\n", () => {});
+		if (config.createLogFile) fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}
 	/**
@@ -75,7 +76,7 @@ class Logger {
 	debug(message) {
 		let msg = `[${format("DD-MM-YYYY hh:mm:ss")}][${this.name}][Debug] : ${message}`;
 		if (this.debugLog) console.log(safe.gray(msg));
-		fs.appendFile(logFilePath, msg + "\n", () => {});
+		if (config.createLogFile) fs.appendFile(logFilePath, msg + "\n", () => {});
 		return;
 	}
 }
@@ -92,7 +93,9 @@ function format(format) {
 		.replace(/hh/g, (date.getHours().toString().length == 1 ? "0" : "") + date.getHours());
 }
 
-let logFilePath = `./log/${format("DD-MM-YYYY_hh-mm-ss")}.log`;
-if (!fs.existsSync(logFilePath)) fs.appendFileSync(logFilePath, "");
+if (config.createLogFile) {
+	let logFilePath = `./log/${format("DD-MM-YYYY_hh-mm-ss")}.log`;
+	if (!fs.existsSync(logFilePath)) fs.appendFileSync(logFilePath, "");
+}
 
 module.exports = Logger;
