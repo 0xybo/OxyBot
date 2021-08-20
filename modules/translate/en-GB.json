@@ -203,7 +203,8 @@
 		"main": {
 			"home": "Home",
 			"about": "About us",
-			"login": "Sign in"
+			"login": "Sign in",
+			"invite": "Invite the bot"
 		},
 		"404": {
 			"title": "Error 404 : Page not found",

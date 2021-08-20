@@ -1,5 +1,5 @@
 {
-	"startClient": false,
+	"startClient": true,
 	"startWeb": true,
 	"debugLog": false,
 	"createLogFile": false,

@@ -31,7 +31,6 @@ class Web {
 		this.app.use(bodyParser.urlencoded({ extended: true }));
 		this.app.use(function (req, res, next) {
 			logger.info(`${req.method.toUpperCase()}: ${req.originalUrl}`);
-			console.log(req, res);
 			next();
 		});
 
@@ -39,7 +38,7 @@ class Web {
 			if (element.type === "page") {
 				if (element.request.includes("get"))
 					this.app.get(element.path, (req, res) => {
-						res.render(element.name, { translate: this.translate.getAllWithLanguage(req.session.locale || "en-GB"), theme: req.session.theme || "dark" });
+						res.render(element.name, { translate: this.translate.getAllWithLanguage(req.session.locale || "en-GB"), bot: this, theme: req.session.theme || "dark" });
 					});
 			} else {
 				this.app.use(element.path, require(path.join(__dirname, "routers", element.name + ".js")));

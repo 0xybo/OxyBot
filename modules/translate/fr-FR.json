@@ -204,7 +204,8 @@
 		"main": {
 			"home": "Accueil",
 			"about": "À propos de nous",
-			"login": "Se connecter"
+			"login": "Se connecter",
+			"invite": "Inviter le bot"
 		},
 		"404": {
 			"title": "Erreur 404 : Page introuvable",

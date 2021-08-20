@@ -54,16 +54,17 @@ html(theme="dark")
 		#body
 			block body
 		footer
-			a.logo(href="/")
-				svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.56 127.56")
-					g
-						circle(cx="63.78" cy="63.78" r="63.78" fill="#ff9c6e")
-						path(d="M51,56.82a7.24,7.24,0,0,1-7.4,7,7.08,7.08,0,1,1,.09-14.15A7.24,7.24,0,0,1,51,56.82Z" fill="black")
-						path(d="M83.68,63.78A7,7,0,0,1,76.54,57a6.8,6.8,0,0,1,6.58-7.24,7.15,7.15,0,0,1,7.51,6.94A7.25,7.25,0,0,1,83.68,63.78Z" fill="black")
-						path(d="M65.2,92H62.36A11.34,11.34,0,0,1,51,80.61H76.54A11.34,11.34,0,0,1,65.2,92Z" fill="black")
-				div(class="name") xyBot
-			.links
-				a.item(href="https://discord.com/oauth2/authorize?client_id=662693245863723034&scope=bot&permissions=8589934583") #{translate.web.main.invite}
+			iframe(src=`https://discord.com/widget?id=877631893049319497&theme=dark` allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts")
+			.invite
+				a.logo(href="/")
+					svg(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 127.56 127.56")
+						g
+							circle(cx="63.78" cy="63.78" r="63.78" fill="#ff9c6e")
+							path(d="M51,56.82a7.24,7.24,0,0,1-7.4,7,7.08,7.08,0,1,1,.09-14.15A7.24,7.24,0,0,1,51,56.82Z" fill="black")
+							path(d="M83.68,63.78A7,7,0,0,1,76.54,57a6.8,6.8,0,0,1,6.58-7.24,7.15,7.15,0,0,1,7.51,6.94A7.25,7.25,0,0,1,83.68,63.78Z" fill="black")
+							path(d="M65.2,92H62.36A11.34,11.34,0,0,1,51,80.61H76.54A11.34,11.34,0,0,1,65.2,92Z" fill="black")
+					div(class="name") xyBot
+				a.link(href=bot.config.startClient? bot.client.generateInvite({scopes: ["bot"], permissions: "8589934583"}): "https://discord.com/oauth2/authorize?client_id=662693245863723034&scope=bot&permissions=8589934583") #{translate.web.main.invite}
 			.pages
 				a.item(href="/") #{translate.web.main.home}
 				a.item(href="/about") #{translate.web.main.about}
