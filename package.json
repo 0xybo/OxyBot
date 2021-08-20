@@ -22,5 +22,9 @@
 		"sqlite": "^4.0.23",
 		"sqlite3": "^4.2.0",
 		"uid-safe": "^2.1.5"
-	}
+	},
+	"engines": {
+		"node": ">=16.6.1"
+	},
+	"engineStrict" : true
 }
